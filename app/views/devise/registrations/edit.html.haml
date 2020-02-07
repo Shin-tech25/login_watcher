@@ -1,0 +1,49 @@
+.edit-wrapper 
+  %h2.edit-wrapper__title
+    ユーザー情報の編集
+  %br/
+  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+    = render "devise/shared/error_messages", resource: resource
+    .field
+      = f.label :username, class: 'form-label'
+      %br/
+      = f.text_field :username, class: 'form-label'
+    .field
+      %p.form-label ユーザーアイコン画像
+      = f.label :userimage do
+        = fa_icon "image"
+        = f.file_field :userimage, class: 'form-label userimage-input'
+    .field
+      = f.label :email, class: 'form-label'
+      %br/
+      = f.email_field :email, autofocus: true, autocomplete: "email", class: 'form-label'
+    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+      %div
+        Currently waiting confirmation for: #{resource.unconfirmed_email}
+    %br/
+    .field
+      = f.label :password, class: 'form-label'
+      -# %i (変更しない場合は空欄）
+      %br/
+      = f.password_field :password, autocomplete: "new-password", class: 'form-label', placeholder: "#{@minimum_password_length}文字以上"
+      
+    %br/
+    .field
+      = f.label :password_confirmation, class: 'form-label'
+      %br/
+      = f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-label'
+    %br/
+    .field
+      = f.label :current_password, class: 'form-label'
+      %i (変更を確認するには現在のパスワードが必要です)
+      %br/
+      = f.password_field :current_password, autocomplete: "current-password", class: 'form-label'
+    %br/
+    .actions
+      = f.submit "変更", class: 'form-submit-action'
+  %br/
+  %br/
+  = link_to "ログアウト", destroy_user_session_path, method: :delete, class: 'btn'
+  %p
+    #{button_to "アカウントを削除", registration_path(resource_name), data: { confirm: "本当に削除していいですか？" }, method: :delete}
+  = link_to "戻る", root_path

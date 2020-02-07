@@ -1,0 +1,50 @@
+.edit-wrapper{
+  width: 75vw;
+  // height: 100vh;
+  background-color: #fef6e4;
+  margin: 0 auto;
+  padding: 30px;
+  text-align: center;
+  &__title{
+    color: #001858;
+    font-size: 30px;
+    font-weight: bold;
+  }
+  .edit_user{
+    background-color: #001858;
+    color:#fef6e4;
+    .error-explanation{
+
+    }
+    .field{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .form-label{
+        margin: 15px;
+
+      }
+      .fa-image{
+        font-size: 25px;
+        margin-right: 35px;
+      }
+      .userimage-input{
+        display: none;
+      }
+    }
+    .form-submit-action{
+      display: inline-block;
+      padding: 0.5em 1em;
+      text-decoration: none;
+      color: #67c5ff;
+      border: double 4px #67c5ff;
+      border-radius: 3px;
+      transition: .4s;
+      margin-bottom: 20px;
+    }
+    .form-submit-action:hover{
+      background: #fffbef;
+    }
+
+  }
+}

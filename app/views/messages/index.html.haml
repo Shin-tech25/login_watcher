@@ -1,0 +1,31 @@
+.wrapper
+  .wrapper__left
+    .wrapper__left__users
+      .wrapper__left__users__attend
+        = render partial: "attend", collection: @attends
+      .wrapper__left__users__absent
+        = render partial: "absent", collection: @absents
+    .wrapper__left__action
+      - if user_signed_in?
+        %p hello!! #{current_user.username}
+        %p last login: #{current_user.last_login}
+        = link_to "log-out", destroy_user_session_path, method: :delete, class: 'wrapper__left__action__logout'
+        = link_to "edit", edit_user_registration_path, method: :get, class: 'wrapper__left__action__edit'
+
+      - else
+        %p hello
+        = link_to "sign-in", new_user_session_path
+        = link_to "sign-up",  new_user_registration_path
+
+  .wrapper__right
+    .wrapper__right__messages
+      = render partial: "message", collection: @messages
+      -# = render partial: "message"
+    .wrapper__right__form
+      = form_with(model: @message, class: :wrapper__right__form__box, local: true) do |form|
+        = form.text_field :content, placeholder: 'type a message', class: 'wrapper__right__form__box__text-field'
+ 
+        = form.label :image, class: 'wrapper__right__form__box__label' do
+          = fa_icon "image", class: 'wrapper__right__form__box__label__icon'
+          = form.file_field :image, class: 'wrapper__right__form__box__label__hidden'
+        = form.submit '送信', class: 'wrapper__right__form__box__submit-btn'

@@ -1,0 +1,7 @@
+.wrapper__left__users__attend__card
+  -# = image_tag 'user.png', alt: 'user', height: '87px', width: '87px', class: 'wrapper__left__users__absent__card__img'
+  - if attend.userimage.present?
+    = image_tag attend.userimage.url, alt: 'user', height: '130px', width: '130px', class: 'wrapper__left__users__attend__card__img'
+  - else
+    = image_tag 'user.png', alt: 'user', height: '130px', width: '130px', class: 'wrapper__left__users__attend__card__img'
+  %p.wrapper__left__users__attend__card__name #{attend.username}
