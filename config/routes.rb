@@ -13,4 +13,5 @@ Rails.application.routes.draw do
     resources :messages, only: [:create, :index], defaults: { format: 'json' }
   end
   resources :users, only: [:create, :index, :show], defaults: { format: 'json' }
+  resources :marks, only: [:create], defaults: {format: 'json'}
 end

@@ -7,4 +7,5 @@ class User < ApplicationRecord
   validates :userimage, null: false
   mount_uploader :userimage, ImageUploader
   has_many :messages
+  has_many :marks
 end
