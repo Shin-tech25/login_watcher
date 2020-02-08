@@ -14,5 +14,9 @@
         %p.wrapper__right__messages__message__main__content__text
           = message.content
       = image_tag message.image.url, alt: 'image', width: '400px', class: 'wrapper__right__messages__message__main__content__img' if message.image.present?
-  .wrapper__right__messages__message__marks
-    %p.wrapper__right__messages__message__marks__box 既読 #{message.markcounts}
+  .wrapper__right__messages__message__marks{data: {markcounts: message.markcounts}}
+    - if message.markcounts - 1 > 0
+      %p.wrapper__right__messages__message__marks__box 
+        既読 #{message.markcounts - 1}
+    - else
+      %p.wrapper__right__messages__message__marks__box

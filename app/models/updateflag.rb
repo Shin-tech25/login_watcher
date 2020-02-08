@@ -1,0 +1,2 @@
+class Updateflag < ApplicationRecord
+end

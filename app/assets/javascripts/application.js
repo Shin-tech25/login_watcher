@@ -21,7 +21,7 @@ $(function(){
   // autoupdate function listener
   setInterval(reloadUsers, 7000);
   setInterval(reloadMessages, 7000);
-  setInterval(reloadMarks, 5000);
+  setInterval(reloadMarks, 2000);
 
   
   // event listener
@@ -58,8 +58,11 @@ $(function(){
   });
   
   $('.wrapper__right__messages').on("scroll", function(e){
-    console.log('insert marks data -> database');
+    // console.log('scroll and marks eventlistener loaded.');
+
     var total = $('.wrapper__right__messages__message').length; //message total
+    // console.log($('.wrapper__right__messages__message'));
+    // console.log('length:', total);
     var sendMarkedArray = new Array(length * 2);
     var obj = $('.wrapper__right__messages__message');
 
@@ -68,7 +71,13 @@ $(function(){
       var tmp = '.' + id;
       tmp = tmp.toString();
       var target = $(tmp);
+      
       var p = $('.wrapper__right__messages').height() - target.offset().top;
+      // console.log($('.wrapper__right__messages').height());
+      // console.log(target);
+      // console.log(target.offset());
+      // console.log(target.offset().top)
+      console.log(p);
       if(p>0){
         // console.log(id, 'true');
         sendMarkedArray[2*i] = id;
@@ -79,7 +88,8 @@ $(function(){
         sendMarkedArray[2*i+1] = false;
       }
     }
-  
+    console.log(sendMarkedArray);
+    console.log(total);
     $.ajax({
       type: 'POST',
       url: '/marks',
@@ -89,15 +99,6 @@ $(function(){
     .done(function(messages){
       // console.log(messages);
       console.log("Ajax connected successfully.");
-      // if(messages.length !== 0){
-      //   var insertHTML = '';
-      //   $.each(messages, function(message) {
-      //     insertHTML += buildHTML(message)
-      //   });
-      //   console.log(insertHTML);
-      //   $('.wrapper__right__messages').empty();
-      //   $('.wrapper__right__messages').append(insertHTML);
-      // }
     })
     .fail(function(){
       console.log("error")

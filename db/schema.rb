@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_07_103413) do
+ActiveRecord::Schema.define(version: 2020_02_08_084730) do
 
   create_table "marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.boolean "mark"
@@ -18,8 +18,8 @@ ActiveRecord::Schema.define(version: 2020_02_07_103413) do
     t.bigint "message_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["message_id"], name: "index_marks_on_message_id"
-    t.index ["user_id"], name: "index_marks_on_user_id"
+    t.index ["message_id"], name: "fk_rails_22bd757e51"
+    t.index ["user_id", "message_id"], name: "index_marks_on_user_id_and_message_id", unique: true
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_02_07_103413) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.integer "markcounts", default: 0
+    t.boolean "checkmark", default: true
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 

@@ -1,4 +1,4 @@
-json.array! @message do |message|
+json.array! @messages do |message|
   json.markcounts message.markcounts
   json.username message.user.username
   json.created_at message.created_at.strftime("%Y年%m月%d日 %H時%M分")
