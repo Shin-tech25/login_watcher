@@ -119,32 +119,64 @@
       overflow-y: scroll;
       background-color: #abd1c6;
       &__message{
-        margin: 20px;
-        background-color: #e8e4e6;
-        padding: 10px;
-        &__upper-info{
-          width: 90%;
-          display: flex;
+        padding: 0.5em 1em;
+        margin: 2em 20px;
+        color: #5d627b;
+        background: white;
+        border-top: solid 5px #5d627b;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.22);
+
+        // below was defined before...
+        // margin: 15px 20px;
+        // background-color: #e8e4e6;
+        // padding: 20px;
+        // position: relative;
+        display: flex;
+        &__userimage{
           margin: 0 auto;
-          &__user{
-            width: 30%;
+          border-radius: 50%;
+          width: 87px;
+          height: 87px;
+        }
+        &__main{
+          width: 90%;
+          &__upper-info{
+            width: 90%;
+            display: flex;
+            margin: 0 auto;
+            &__user{
+              width: 30%;
+            }
+            &__created-at{
+              width: 70%;
+            }
           }
-          &__created-at{
-            width: 70%;
+          &__content{
+            width: 90%;
+            // height: 60px;
+            // background-color: blue;
+            margin: 0 auto;
+            &__text{
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
+            &__img{
+              padding-top: 10px;
+              padding-bottom: 10px;
+            }
           }
         }
-        &__content{
-          width: 90%;
-          // height: 60px;
-          // background-color: blue;
-          margin: 0 auto;
-          &__text{
-            padding-top: 10px;
-            padding-bottom: 10px;
-          }
-          &__img{
-            padding-top: 10px;
-            padding-bottom: 10px;
+        &__marks{
+          width: 10%;
+          // position: absolute;
+          // top: 20px;
+          // left: 80px;
+          
+          &__box{
+            padding: 0.5em 1em;
+            margin: 2em 0;
+            color: #2c2c2f;
+            background: white;/*背景色*/
           }
         }
       }
