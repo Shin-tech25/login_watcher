@@ -10,7 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_08_084730) do
+ActiveRecord::Schema.define(version: 2020_02_09_081325) do
+
+  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "message_id"
+    t.boolean "favorite", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "fk_rails_1268365e65"
+    t.index ["user_id", "message_id"], name: "index_favorites_on_user_id_and_message_id", unique: true
+  end
 
   create_table "marks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.boolean "mark"
@@ -30,6 +40,7 @@ ActiveRecord::Schema.define(version: 2020_02_08_084730) do
     t.bigint "user_id"
     t.integer "markcounts", default: 0
     t.boolean "checkmark", default: true
+    t.integer "favocounts", default: 0, null: false
     t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
@@ -49,6 +60,8 @@ ActiveRecord::Schema.define(version: 2020_02_08_084730) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "favorites", "messages"
+  add_foreign_key "favorites", "users"
   add_foreign_key "marks", "messages"
   add_foreign_key "marks", "users"
   add_foreign_key "messages", "users"

@@ -145,10 +145,30 @@
             display: flex;
             margin: 0 auto;
             &__user{
-              width: 30%;
+              width: 25%;
             }
             &__created-at{
-              width: 70%;
+              width: 55%;
+            }
+            &__favorites{
+              width: 20%;
+              display: flex;
+              justify-content: space-between;
+              &__btn{
+                line-height: 24px;
+                // color: red;
+              }
+              &__btn--clicked{
+                color: red;
+                line-height: 24px;
+              }
+              &__cnt{
+                margin-right: 110px;
+              }
+              &__cnt--clicked{
+                margin-right: 110px;
+                color: red;
+              }
             }
           }
           &__content{
@@ -165,6 +185,7 @@
               padding-bottom: 10px;
             }
           }
+          
         }
         &__marks{
           width: 10%;
@@ -173,6 +194,7 @@
           // left: 80px;
           
           &__box{
+            height: 10px;
             padding: 0.5em 1em;
             margin: 2em 0;
             color: #2c2c2f;

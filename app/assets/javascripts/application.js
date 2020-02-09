@@ -19,10 +19,12 @@
 $(function(){
 
   // autoupdate function listener
-  setInterval(reloadUsers, 7000);
-  setInterval(reloadMessages, 7000);
-  setInterval(reloadMarks, 2000);
-
+  if(document.location.href.match('localhost:3000/$')){
+    setInterval(reloadUsers, 7000);
+    setInterval(reloadMessages, 7000);
+    setInterval(reloadMarks, 5000);
+    setInterval(checkMarks, 2000);
+  }
   
   // event listener
   $('.wrapper__right__form__box').on("submit", function(e){
@@ -56,54 +58,36 @@ $(function(){
       $('.wrapper__right__form__box__submit-btn').prop('disabled', false);
     })
   });
-  
-  $('.wrapper__right__messages').on("scroll", function(e){
-    // console.log('scroll and marks eventlistener loaded.');
 
-    var total = $('.wrapper__right__messages__message').length; //message total
-    // console.log($('.wrapper__right__messages__message'));
-    // console.log('length:', total);
-    var sendMarkedArray = new Array(length * 2);
-    var obj = $('.wrapper__right__messages__message');
+  $('.wrapper__right__messages__message__main__upper-info__favorites').on("click", function(e){
+    var favo_box = $(this)
+    console.log(favo_box);
+    // get message-id
+    var message_id = favo_box.parents()[2].dataset.messageId;
+    console.log('=> parameters: { message_id: ', message_id, '}');
 
-    for(var i=0; i<total; i++){
-      var id = obj[i].dataset.messageId;
-      var tmp = '.' + id;
-      tmp = tmp.toString();
-      var target = $(tmp);
-      
-      var p = $('.wrapper__right__messages').height() - target.offset().top;
-      // console.log($('.wrapper__right__messages').height());
-      // console.log(target);
-      // console.log(target.offset());
-      // console.log(target.offset().top)
-      // console.log(p);
-      if(p>0){
-        // console.log(id, 'true');
-        sendMarkedArray[2*i] = id;
-        sendMarkedArray[2*i+1] = true;
-      } else {
-        // console.log(id, 'false');
-        sendMarkedArray[2*i] = id;
-        sendMarkedArray[2*i+1] = false;
-      }
-    }
-    // console.log(sendMarkedArray);
-    // console.log(total);
+    // get data_clicked
+    var data_clicked = favo_box.children()[0].dataset.clicked;
+    // console.log(data_clicked);
+    
+    // icon クリックでAjax通信開始 -> 通信が成功したら、帰ってきた値に応じてCSSでthumbs-upのボタンの色を変更する。
     $.ajax({
-      type: 'POST',
-      url: '/marks',
+      url: '/favorites',
+      type: 'post',
       dataType: 'json',
-      data: { marks: sendMarkedArray, total: total}
+      data: {message_id: message_id}
     })
-    .done(function(messages){
-      // console.log(messages);
-      // console.log("Ajax connected successfully.");
+    .done(function(message){
+      console.log('<= ', message);
+      
+      clickFavorite(favo_box, message.favocounts, data_clicked);
+
     })
     .fail(function(){
-      console.log("error")
+      console.log('Ajax connected error.');
+    
     });
-  })
 
+  });
 
 });

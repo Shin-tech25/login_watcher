@@ -8,4 +8,5 @@ class User < ApplicationRecord
   mount_uploader :userimage, ImageUploader
   has_many :messages
   has_many :marks
+  has_many :favorites
 end

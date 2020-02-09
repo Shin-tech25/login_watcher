@@ -250,3 +250,116 @@ var reloadMarks = function(){
   });
   
 };
+
+var checkMarks = function(){
+  // console.log('scroll and marks eventlistener loaded.');
+
+  var total = $('.wrapper__right__messages__message').length; //message total
+  // console.log($('.wrapper__right__messages__message'));
+  // console.log('length:', total);
+  var sendMarkedArray = new Array(length * 2);
+  var obj = $('.wrapper__right__messages__message');
+
+  for(var i=0; i<total; i++){
+    var id = obj[i].dataset.messageId;
+    var tmp = '.' + id;
+    tmp = tmp.toString();
+    var target = $(tmp);
+    
+    var p = $('.wrapper__right__messages').height() - target.offset().top;
+    // console.log($('.wrapper__right__messages').height());
+    // console.log(target);
+    // console.log(target.offset());
+    // console.log(target.offset().top)
+    // console.log(p);
+    if(p>0){
+      // console.log(id, 'true');
+      sendMarkedArray[2*i] = id;
+      sendMarkedArray[2*i+1] = true;
+    } else {
+      // console.log(id, 'false');
+      sendMarkedArray[2*i] = id;
+      sendMarkedArray[2*i+1] = false;
+    }
+  }
+  // console.log(sendMarkedArray);
+  // console.log(total);
+  $.ajax({
+    type: 'POST',
+    url: '/marks',
+    dataType: 'json',
+    data: { marks: sendMarkedArray, total: total}
+  })
+  .done(function(messages){
+    // console.log(messages);
+    // console.log("Ajax connected successfully.");
+  })
+  .fail(function(){
+    console.log("error")
+  });
+};
+
+var clickFavorite = function(toggle_favo_parent, favo_cnt, data_clicked){
+  var new_child0, new_child1;
+  // クリックされていない時の処理
+  if(data_clicked == 0){
+    new_child0 =
+      `<i style = "color: red; line-height: 24px;" data-clicked="1" class="fa fa-thumbs-up wrapper__right__messages__message__main__upper-info__favorites__btn--clicked"></i>`
+    new_child1 =
+      `<div style = "color: red; margin-right: 110px;" class="wrapper__right__messages__message__main__upper-info__favorites__cnt--clicked">
+        ${favo_cnt}
+      </div>`
+  // クリックされている時の処理 
+  } else {  
+    new_child0 =
+    `<i style = "line-height: 24px;" data-clicked = "0" class="fa fa-thumbs-up wrapper__right__messages__message__main__upper-info__favorites__btn">
+    </i>`
+    if (favo_cnt > 0){
+      new_child1 =
+      `<div style = "margin-right: 110px;" class="wrapper__right__messages__message__main__upper-info__favorites__cnt">
+        ${favo_cnt}
+      </div>`
+    } else {
+      new_child1 =
+      `<div style = "margin-right: 110px;" class="wrapper__right__messages__message__main__upper-info__favorites__cnt">
+      </div>`
+    }
+  }
+
+  var result = new_child0 + new_child1;
+
+  toggle_favo_parent.empty();
+  toggle_favo_parent.append(result);
+};
+
+// var clickFavorite = function(toggle_favo_parent, favo_cnt, flag){
+//   var new_child0, new_child1;
+//   // クリックされていない時の処理
+//   if(!flag){
+//     new_child0 = toggle_favo_parent.children()[0];
+//     new_child0.addClass("wrapper__right__messages__message__main__upper-info__favorites__btn--clicked");
+//     new_child1 = toggle_favl_parent.children()[1];
+    
+//     // new_child0 =
+//     //   `<i class="fa fa-thumbs-up wrapper__right__messages__message__main__upper-info__favorites__btn wrapper__right__messages__message__main__upper-info__favorites__btn--clicked">
+//     //   </i>`
+//     // new_child1 =
+//     //   `<div class="wrapper__right__messages__message__main__upper-info__favorites__cnt wrapper__right__messages__message__main__upper-info__favorites__cnt--clicked">
+//     //     ${favo_cnt}
+//     //   </div>`
+//   // クリックされている時の処理 
+//   } else {  
+//     new_child0 =
+//     `<i class="fa fa-thumbs-up wrapper__right__messages__message__main__upper-info__favorites__btn">
+//     </i>`
+//     new_child1 =
+//     `<div class="wrapper__right__messages__message__main__upper-info__favorites__cnt">
+//       ${favo_cnt}
+//     </div>`
+//   }
+
+//   var result = new_child0 + new_child1;
+
+//   toggle_favo_parent.empty();
+//   toggle_favo_parent.append(result);
+// };
