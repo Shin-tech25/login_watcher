@@ -8,11 +8,11 @@ var reloadMessages = function(){
     data: {id: last_message_id}
   })
   .done(function(messages){
-    console.log(messages);
+    // console.log(messages);
     if(messages.length !== 0){
       var insertHTML = '';
       $.each(messages, function(i, message) {
-        console.log(message);
+        // console.log(message);
         insertHTML += buildHTML(message)
       });
       $('.wrapper__right__messages').append(insertHTML);
@@ -29,18 +29,35 @@ var buildHTML = function(message){
   // set userimage
   
   var userimage_url = '';
-  if(message.userimage.url != null) userimage_url = message.userimage.url;
-  else userimage_url = '/assets/user.png';
+  if(message.userimage.url != null){
+    userimage_url = message.userimage.url;
+  } else {
+    userimage_url = '/assets/user.png';
+  }
   
   //
-  userimage_url = '/assets/user.png';
+  // userimage_url = '/assets/user.png';
 
   // メッセージに画像が存在している場合
-  
-  if ( message.image.url != null ) {
-    // console.log(message.image.url==null);
 
-    // console.log('hoge');
+  // -- DEBUG CONSOLE
+  console.log('BEGIN');
+  console.log('message', message);
+  console.log('message.image', message.image);
+  console.log('message.userimage', message.userimage);
+  console.log('message.userimage.url', message.userimage.url);
+  console.log('message.userimage.url != null', message.userimage.url != null);
+  console.log('message.image.url', message.image.url);
+  console.log('message.image.url == null', message.image.url==null);
+  console.log('userimage_url', userimage_url);
+  console.log('END');
+  // --
+  if ( message.image.url != null ) {
+    // 
+    
+    console.log(userimage_url);
+    console.log('hoge');
+    //
     var html =
      `<div class="wrapper__right__messages__message ${message.id}" data-message-id = ${message.id}>
         <img src = "${userimage_url}", class="wrapper__right__messages__message__userimage">
@@ -68,8 +85,8 @@ var buildHTML = function(message){
     
     return html;
   } else {
-    // console.log('hogehoge');
-    // console.log(userimage_url);
+    console.log('hogehoge');
+    console.log(userimage_url);
     var html =
      `<div class="wrapper__right__messages__message ${message.id}" data-message-id = ${message.id}>
         <img src = "${userimage_url}", class="wrapper__right__messages__message__userimage">
@@ -169,7 +186,7 @@ var reloadUsers = function(){
 };
 
 var reloadMarks = function(){
-  console.log('reloadMarks');
+  // console.log('reloadMarks');
   // 既読に変更があれば、そのメッセージだけを変更をかけるような処理を加える。
   // Ajaxに渡すパラメーターは、message_id, markcounts
   // Ajaxから受け取るパラメーターは変更があるmessage_id, markcounts
@@ -192,8 +209,8 @@ var reloadMarks = function(){
   // console.log(sendMarksArray);
 
   // Ajaxで作成した配列を渡す
-  console.log(sendMarksArray);
-  console.log(messages_total);
+  // console.log(sendMarksArray);
+  // console.log(messages_total);
   $.ajax({
     url: '/marks',
     type: 'get',
@@ -201,11 +218,11 @@ var reloadMarks = function(){
     data: {marks: sendMarksArray, total: messages_total}
   })
   .done(function( messages ){
-    console.log('reloadmarks each messages', messages);
+    // console.log('reloadmarks each messages', messages);
     if(messages.length !== 0){
       var insertHTML = '';
       $.each(messages, function(i, message) {
-        console.log('reloadmarks each message: ', message);
+        // console.log('reloadmarks each message: ', message);
         target = $(`.${message.id}`);
         old_child = target.children()[2];
         var mark_counts = message.markcounts - 1;

@@ -77,7 +77,7 @@ $(function(){
       // console.log(target);
       // console.log(target.offset());
       // console.log(target.offset().top)
-      console.log(p);
+      // console.log(p);
       if(p>0){
         // console.log(id, 'true');
         sendMarkedArray[2*i] = id;
@@ -88,8 +88,8 @@ $(function(){
         sendMarkedArray[2*i+1] = false;
       }
     }
-    console.log(sendMarkedArray);
-    console.log(total);
+    // console.log(sendMarkedArray);
+    // console.log(total);
     $.ajax({
       type: 'POST',
       url: '/marks',
@@ -98,7 +98,7 @@ $(function(){
     })
     .done(function(messages){
       // console.log(messages);
-      console.log("Ajax connected successfully.");
+      // console.log("Ajax connected successfully.");
     })
     .fail(function(){
       console.log("error")
