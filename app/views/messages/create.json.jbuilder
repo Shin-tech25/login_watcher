@@ -5,3 +5,4 @@ json.image @message.image
 json.id @message.id
 json.markcounts @message.markcounts
 json.userimage @message.user.userimage
+json.favocounts @message.favocounts

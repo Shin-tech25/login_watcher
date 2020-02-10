@@ -23,6 +23,7 @@ $(function(){
     setInterval(reloadUsers, 7000);
     setInterval(reloadMessages, 7000);
     setInterval(reloadMarks, 5000);
+    setInterval(reloadFavorites, 5000);
     setInterval(checkMarks, 2000);
   }
   
@@ -59,9 +60,9 @@ $(function(){
     })
   });
 
-  $('.wrapper__right__messages__message__main__upper-info__favorites').on("click", function(e){
+  $(document).on("click", '.wrapper__right__messages__message__main__upper-info__favorites', function(e){
     var favo_box = $(this)
-    console.log(favo_box);
+    // console.log(favo_box);
     // get message-id
     var message_id = favo_box.parents()[2].dataset.messageId;
     console.log('=> parameters: { message_id: ', message_id, '}');

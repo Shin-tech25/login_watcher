@@ -4,5 +4,6 @@ class Message < ApplicationRecord
   has_many :favorites
   validates :content, presence: true, unless: :image?
   validates :markcounts, null: false
+  validates :favocounts, null: false
   mount_uploader :image, ImageUploader
 end

@@ -1,4 +1,6 @@
 class FavoritesController < ApplicationController
+  after_action :reset_check_mark, only: [:index]
+
   def create
     param_message_id = params[:message_id]
     favorite_a = Favorite.where(user_id: current_user.id, message_id: param_message_id)
@@ -39,4 +41,33 @@ class FavoritesController < ApplicationController
       redirect_to root_path
     end
   end
+
+  # 自動更新機能
+  def index
+    array = params[:favorites]
+    cnt = 0
+
+    while(cnt < params[:total].to_i) do
+      p_id = array[2*cnt].to_i
+      p_favocounts = array[2*cnt+1].to_i
+      message = Message.find(p_id)
+      if p_favocounts != message.favocounts
+        message.update(checkmark: false)
+      end
+      cnt = cnt + 1
+    end
+    
+    @messages = Message.where(checkmark: false)
+    
+    respond_to do |format|
+      format.json
+    end
+    
+  end
+
+  # リセット処理
+  def reset_check_mark
+    Message.where(checkmark: false).update(checkmark: true)
+  end
+
 end
