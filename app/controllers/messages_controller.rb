@@ -1,6 +1,8 @@
 class MessagesController < ApplicationController
+  helper_method :is_exist_favorite
 
   def index
+    @favorites = Favorite.where(user_id: current_user.id)
     @message = Message.new
     @messages = Message.includes(:user).all
     @attends = User.where(status: true)
@@ -22,8 +24,13 @@ class MessagesController < ApplicationController
     params.require(:message).permit(:content, :image).merge(user_id: current_user.id)
   end
 
-  def message_save
-    @message.save
+  def is_exist_favorite(userId, messageId)
+    favorite = Favorite.where(user_id: userId, message_id: messageId, favorite: true)
+    if favorite.present?
+      return true
+    else
+      return false
+    end
   end
 
 end

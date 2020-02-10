@@ -3,17 +3,28 @@
     = image_tag message.user.userimage.url, class: 'wrapper__right__messages__message__userimage'
   - else
     = image_tag 'user.png', class: 'wrapper__right__messages__message__userimage'
-  .wrapper__right__messages__message__main  
+  .wrapper__right__messages__message__main
     .wrapper__right__messages__message__main__upper-info
       .wrapper__right__messages__message__main__upper-info__user
         = message.user.username
       .wrapper__right__messages__message__main__upper-info__created-at
         = message.created_at.strftime("%Y年%m月%d日 %H時%M分")
+      .wrapper__right__messages__message__main__upper-info__favorites{data: {favocounts: message.favocounts}}
+        - unless is_exist_favorite(current_user.id, message.id)
+          = fa_icon "thumbs-up", class: 'wrapper__right__messages__message__main__upper-info__favorites__btn', data: {clicked: 0}
+          .wrapper__right__messages__message__main__upper-info__favorites__cnt
+            #{message.favocounts}
+        - else
+          = fa_icon "thumbs-up", class: 'wrapper__right__messages__message__main__upper-info__favorites__btn--clicked', data: {clicked: 1}
+          .wrapper__right__messages__message__main__upper-info__favorites__cnt--clicked
+            #{message.favocounts}
+        
     .wrapper__right__messages__message__main__content
       - if message.present?
         %p.wrapper__right__messages__message__main__content__text
           = message.content
       = image_tag message.image.url, alt: 'image', width: '400px', class: 'wrapper__right__messages__message__main__content__img' if message.image.present?
+    
   .wrapper__right__messages__message__marks{data: {markcounts: message.markcounts}}
     - if message.markcounts - 1 > 0
       %p.wrapper__right__messages__message__marks__box 

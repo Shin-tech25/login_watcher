@@ -17,7 +17,7 @@
         = link_to "sign-up",  new_user_registration_path
   .wrapper__right
     .wrapper__right__messages
-      = render partial: "message", collection: @messages
+      = render partial: "message", collection: @messages, locals: {favorite: @favorites}
     .wrapper__right__form
       = form_with(model: @message, class: :wrapper__right__form__box, local: true) do |form|
         = form.text_field :content, placeholder: 'type a message', class: 'wrapper__right__form__box__text-field'
